@@ -83,6 +83,7 @@ def save_roi_features(args, cfg, im_file, im, dataset_dict, boxes, scores, featu
     image_bboxes = dets[keep_boxes]
     image_objects_conf = np.max(scores[keep_boxes].numpy()[:,1:], axis=1)
     image_objects = np.argmax(scores[keep_boxes].numpy()[:,1:], axis=1)
+    
     if not attr_scores is None:
         attr_scores = attr_scores[0]
         image_attrs_conf = np.max(attr_scores[keep_boxes].numpy()[:,1:], axis=1)
@@ -107,8 +108,32 @@ def save_roi_features(args, cfg, im_file, im, dataset_dict, boxes, scores, featu
             'objects_conf': image_objects_conf
             }
 
+    # reorder
+    order = np.argsort(-image_objects_conf)
+    image_objects_conf = image_objects_conf[order]
+    image_feat = image_feat[order]
+    image_bboxes = image_bboxes[order]
+    image_objects = image_objects[order]
+    image_attrs = image_attrs[order]
+    image_attrs_conf = image_attrs_conf[order]
+
+    # change format to Oscar input
+    image_h = np.size(im, 0) 
+    image_w = np.size(im, 1)
+    image_bboxes[:, 0] /= image_w
+    image_bboxes[:, 1] /= image_h 
+    image_bboxes[:, 2] /= image_w
+    image_bboxes[:, 3] /= image_h 
+    obj_w = (image_bboxes[:, 2] - image_bboxes[:, 0]).reshape(-1, 1)
+    obj_h = (image_bboxes[:, 3] - image_bboxes[:, 1]).reshape(-1, 1)
+    obj_feat = np.concatenate([image_feat, image_bboxes, obj_w, obj_h], axis=1)
+
+
     output_file = os.path.join(args.output_dir, im_file.split('.')[0])
-    np.savez_compressed(output_file, x=image_feat, bbox=image_bboxes, num_bbox=len(keep_boxes), image_h=np.size(im, 0), image_w=np.size(im, 1), info=info)
+    np.savez_compressed(output_file, x=obj_feat, image_h=image_h, image_w=image_w, obj_id=image_objects, 
+        obj_conf=image_objects_conf, attr_id=image_attrs, attr_conf=image_attrs_conf)
+
+
 
 def save_bbox(args, cfg, im_file, im, dataset_dict, boxes, scores):
     MIN_BOXES = cfg.MODEL.BUA.EXTRACTOR.MIN_BOXES
