@@ -61,7 +61,6 @@ def save_roi_features(args, cfg, im_file, im, dataset_dict, boxes, scores, featu
     MIN_BOXES = cfg.MODEL.BUA.EXTRACTOR.MIN_BOXES
     MAX_BOXES = cfg.MODEL.BUA.EXTRACTOR.MAX_BOXES
     CONF_THRESH = cfg.MODEL.BUA.EXTRACTOR.CONF_THRESH
-    print(CONF_THRESH)
   
     dets = boxes[0] / dataset_dict['im_scale']
     scores = scores[0]
