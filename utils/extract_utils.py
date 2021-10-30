@@ -6,7 +6,7 @@ import os
 from models.bua.layers.nms import nms
 from models.bua.box_regression import BUABoxes
 
-PIXEL_MEANS = np.array([[[102.9801, 115.9465, 122.7717]]])
+PIXEL_MEANS = np.array([[[113.29793793, 107.42971889, 98.14528355]]])
 TEST_SCALES = (600,)
 TEST_MAX_SIZE = 1000
 
@@ -60,7 +60,7 @@ def get_image_blob(im, pixel_means):
 def save_roi_features(args, cfg, im_file, im, dataset_dict, boxes, scores, features_pooled, attr_scores=None):
     MIN_BOXES = cfg.MODEL.BUA.EXTRACTOR.MIN_BOXES
     MAX_BOXES = cfg.MODEL.BUA.EXTRACTOR.MAX_BOXES
-    CONF_THRESH = 0.3 #cfg.MODEL.BUA.EXTRACTOR.CONF_THRESH
+    CONF_THRESH = cfg.MODEL.BUA.EXTRACTOR.CONF_THRESH
   
     dets = boxes[0] / dataset_dict['im_scale']
     scores = scores[0]
