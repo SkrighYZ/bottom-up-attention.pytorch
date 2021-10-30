@@ -60,7 +60,7 @@ def get_image_blob(im, pixel_means):
 def save_roi_features(args, cfg, im_file, im, dataset_dict, boxes, scores, features_pooled, attr_scores=None):
     MIN_BOXES = cfg.MODEL.BUA.EXTRACTOR.MIN_BOXES
     MAX_BOXES = cfg.MODEL.BUA.EXTRACTOR.MAX_BOXES
-    CONF_THRESH = cfg.MODEL.BUA.EXTRACTOR.CONF_THRESH
+    CONF_THRESH = 0.3 #cfg.MODEL.BUA.EXTRACTOR.CONF_THRESH
   
     dets = boxes[0] / dataset_dict['im_scale']
     scores = scores[0]
