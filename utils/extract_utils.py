@@ -6,7 +6,8 @@ import os
 from models.bua.layers.nms import nms
 from models.bua.box_regression import BUABoxes
 
-PIXEL_MEANS = np.array([[[113.29793793, 107.42971889, 98.14528355]]])
+#PIXEL_MEANS = np.array([[[113.29793793, 107.42971889, 98.14528355]]])
+PIXEL_MEANS = np.array([[[102.9801, 115.9465, 122.7717]]])
 TEST_SCALES = (600,)
 TEST_MAX_SIZE = 1000
 
