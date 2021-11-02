@@ -7,6 +7,6 @@ python extract_features.py \
 	--extract-mode roi_feats \
 	--min-max-boxes '10,100' \
 	--config-file configs/bua-caffe/extract-bua-caffe-r101.yaml \
-	--image-dir /home/yipeng/img_temp \
+	--image-dir /home/yipeng/flickr30k_images \
 	--bbox-dir ../bboxes \
-	--out-dir /home/yipeng/feat_temp
+	--out-dir /home/yipeng/vinvl-ws/datasets/f30k_feats_butd
