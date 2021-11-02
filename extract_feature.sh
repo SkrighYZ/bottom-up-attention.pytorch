@@ -5,7 +5,7 @@ python extract_features.py \
 	--num-cpus 0 \
 	--gpus '0,1,2,3' \
 	--extract-mode roi_feats \
-	--min-max-boxes '10,50' \
+	--min-max-boxes '10,100' \
 	--config-file configs/bua-caffe/extract-bua-caffe-r152.yaml \
 	--image-dir /home/yipeng/flickr30k_images \
 	--bbox-dir ../bboxes \
